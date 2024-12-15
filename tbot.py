@@ -20,11 +20,10 @@ user_questions = {}  # вопросы для каждого пользовате
 def start_bot(message):
     global chat_id
     chat_id = message.chat.id
-    but1 = InlineKeyboardButton('Помощь', callback_data='but1')
     but2 = InlineKeyboardButton('Квиз', callback_data='but2')
 
     inlinemarkup = InlineKeyboardMarkup()
-    inlinemarkup.add(but1, but2)
+    inlinemarkup.add( but2)
 
     bot.send_message(chat_id, 'Добро пожаловать в автоматизированную систему автопоезда «Россия – моя история»', reply_markup=types.ReplyKeyboardRemove())
     time.sleep(2)
@@ -33,21 +32,19 @@ def start_bot(message):
 # Обработка нажатий на кнопки
 @bot.callback_query_handler(func=lambda call: True)
 def handle_query(call):
-    if call.data == 'but1':
-        markup = types.ReplyKeyboardMarkup()
-        helpb1 = types.ReplyKeyboardMarkup("Установить голосовой помощник")
+    if call.data == 'but2':
+        start_quiz(call.message.chat.id)
+'''     helpb1 = types.ReplyKeyboardMarkup("Установить голосовой помощник")
         markup.row(helpb1)
-        bot.send_message(call.message.chat.id, "Выберите то, что вас интересует", reply_markup=markup)
-
-    elif call.data == 'but2':
-        start_quiz(call.message.chat.id)  # Начинаем квиз
+        bot.send_message(call.message.chat.id, "Выберите то, что вас интересует", reply_markup=markup)'''
 
 
-def mes_vo(message):
+
+'''def mes_vo(message):
     if message.text == "Установить голосовой помощник":
         bot.send_message(message.chat.id, "https://cloud.mail.ru/public/YfV7/Q52xQ92Ce", reply_markup=types.ReplyKeyboardRemove())
         time.delay(2)
-        bot.register_next_step_handler(message,start_bot)
+        bot.register_next_step_handler(message,start_bot)'''
 
 
 def start_quiz(chat_id):
