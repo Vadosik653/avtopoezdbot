@@ -34,9 +34,21 @@ def start_bot(message):
 @bot.callback_query_handler(func=lambda call: True)
 def handle_query(call):
     if call.data == 'but1':
-        bot.send_message(call.message.chat.id, "Скоро сделаем")
+        markup = types.ReplyKeyboardMarkup()
+        helpb1 = types.ReplyKeyboardMarkup("Установить голосовой помощник")
+        markup.row(helpb1)
+        bot.send_message(call.message.chat.id, "Выберите то, что вас интересует", reply_markup=markup)
+
     elif call.data == 'but2':
         start_quiz(call.message.chat.id)  # Начинаем квиз
+
+
+def mes_vo(message):
+    if message.text == "Установить голосовой помощник":
+        bot.send_message(message.chat.id, "https://cloud.mail.ru/public/YfV7/Q52xQ92Ce", reply_markup=types.ReplyKeyboardRemove())
+        time.delay(2)
+        bot.register_next_step_handler(message,start_bot)
+
 
 def start_quiz(chat_id):
     current_question_index[chat_id] = 0  # Сброс индекса вопросов
